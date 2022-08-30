@@ -1,4 +1,4 @@
-export interface Task {
+export interface TaskResource {
   _id: string;
   title: string;
   content: string;

@@ -2,6 +2,8 @@ import { FC, ReactNode, useEffect, useState } from "react";
 
 import Head from "next/head";
 
+import { login } from "@/app/api/fetchers/auth";
+
 interface ILayout {
   title: string;
   children: ReactNode;
