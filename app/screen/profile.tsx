@@ -146,6 +146,7 @@ export const ProfileScreen = () => {
           />
           <Separator css={{ marginBottom: 20 }} />
           <Input
+            type="password"
             placeholder="Old password"
             hint={errors.old_password}
             onChange={(e: any) =>
@@ -153,6 +154,7 @@ export const ProfileScreen = () => {
             }
           />
           <Input
+            type="password"
             placeholder="New password"
             hint={errors.new_password}
             onChange={(e: any) =>
@@ -160,6 +162,7 @@ export const ProfileScreen = () => {
             }
           />
           <Input
+            type="password"
             placeholder="Confirm password"
             hint={errors.confirm_password}
             onChange={(e: any) =>
