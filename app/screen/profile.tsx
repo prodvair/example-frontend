@@ -81,18 +81,20 @@ export const ProfileScreen = () => {
       });
     if (sendParamPassword.old_password) {
       updateUserPassword(sendParamPassword)
-        .then(() => refetch())
+        .then(() => {
+          refetch();
+          setSendParamPassword({
+            old_password: "",
+            new_password: "",
+            confirm_password: "",
+          });
+        })
         .catch(({ response }) => {
           if (response.status === 422)
             setErrors((prevErrors) => ({
               ...prevErrors,
               ...response.data.errors,
             }));
-          setSendParamPassword({
-            old_password: "",
-            new_password: "",
-            confirm_password: "",
-          });
         });
     }
   }, [refetch, sendParam, sendParamPassword]);
