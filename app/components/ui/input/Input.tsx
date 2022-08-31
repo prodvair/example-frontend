@@ -56,18 +56,32 @@ export const Hint = styled("div", {
   marginTop: 3,
   fontSize: 12,
   color: "$red",
+  wordWrap: "normal",
+  variants: {
+    sz: {
+      normal: {
+        maxWidth: 280,
+      },
+      small: {
+        maxWidth: 180,
+      },
+    },
+  },
+  defaultVariants: {
+    sz: "normal",
+  },
 });
 
 export interface InputProps extends InputHTMLAttributes<HTMLInputElement> {
-  sz?: "normal" | "small"; 
+  sz?: "normal" | "small";
   hint?: string;
 }
 
-export const Input: FC<InputProps> = ({ hint, ...props }) => {
+export const Input: FC<InputProps> = ({ hint, sz, ...props }) => {
   return (
     <Box type="block" css={{ marginBottom: 20 }}>
       <InputStyle state={hint ? "error" : "normal"} {...props} />
-      {hint ? <Hint>{hint}</Hint> : ""}
+      {hint ? <Hint sz={sz}>{hint}</Hint> : ""}
     </Box>
   );
 };

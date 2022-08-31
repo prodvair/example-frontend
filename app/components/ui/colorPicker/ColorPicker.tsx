@@ -19,6 +19,7 @@ export const ColorPickerItemStyled = styled(RadioGroup.Item, {
   appearance: "none",
   border: "1px solid $gray",
   padding: 4,
+  outline: "none",
   "&:hover": {
     borderColor: "$black"
   },
@@ -42,7 +43,7 @@ export const ColorPickerItemStyled = styled(RadioGroup.Item, {
   },
   "&[data-state=checked]": {
     padding: 0,
-    borderWidth: 5,
+    borderWidth: 4,
     borderColor: "$white"
   }
 });

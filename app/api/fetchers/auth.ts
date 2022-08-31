@@ -117,6 +117,5 @@ export async function refresh() {
 export async function me() {
   return await $axios
     .get<MeResponse>("api/me")
-    .then((res) => res.data?.user || null)
-    .catch(() => null);
+    .then((res) => res.data?.user || null).catch(() => null)
 }

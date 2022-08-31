@@ -77,7 +77,7 @@ export const SignUpScreen = () => {
             onChange={(e: any) => setValue(e.target.value, "password")}
           />
           <Button size="big" css={{ marginBottom: 10 }} onClick={sendRequest}>
-            Auth
+            Registration
           </Button>
         </Box>
         <ActiveLink href="/login">

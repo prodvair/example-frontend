@@ -1,4 +1,4 @@
-import { FC } from "react";
+import { FC, useCallback } from "react";
 
 import { TaskResource } from "@/app/types/resources/Task";
 import { Pencil1Icon, TrashIcon } from "@radix-ui/react-icons";
@@ -17,9 +17,13 @@ export const TaskCard: FC<TaskResource> = ({
   updated_at,
   created_at,
 }) => {
-  // const getDate = (date: string) => {
-  //   cnew Date()
-  // }
+  const getDate = useCallback((date: string) => {
+    const newDate = new Date(date);
+    const day = newDate.getDay();
+    const month = newDate.getMonth();
+    
+    return `${day < 10 ? `0${day}`: day}.${month < 10 ? `0${month}`: month}.${newDate.getFullYear()} ${newDate.getHours()}:${newDate.getMinutes()}`
+  }, []);
 
   return (
     <Card color={color}>
@@ -47,7 +51,7 @@ export const TaskCard: FC<TaskResource> = ({
       </CardAction>
       <H3 css={{ marginRight: 55 }}>{title}</H3>
       <CardContent>{content}</CardContent>
-      <CardDate className="date">{created_at}</CardDate>
+      <CardDate className="date">{getDate(created_at)}</CardDate>
     </Card>
   );
 };

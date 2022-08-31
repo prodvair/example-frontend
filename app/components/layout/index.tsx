@@ -1,6 +1,7 @@
 import { FC, ReactNode, useEffect, useState } from "react";
 
 import Head from "next/head";
+import { useRouter } from "next/router";
 
 import { AuthMiddleware, useAuth } from "@/app/api/hook/useAuth";
 import { globalCss } from "@/stitches.config";
@@ -8,26 +9,19 @@ import { ExitIcon, PersonIcon } from "@radix-ui/react-icons";
 
 import { Header } from "../header";
 import { Logo } from "../logo";
+import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar";
+import { Box } from "../ui/box";
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "../ui/dropdownMenu";
-import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar";
-import { Box } from "../ui/box";
-import {
-  ScrollArea,
-  ScrollAreaCorner,
-  ScrollAreaScrollbar,
-  ScrollAreaThumb,
-  ScrollAreaViewport,
-} from "../ui/scrollArea";
 
 interface ILayout {
   title: string;
-  alignH?: "left" | "center" | "right" | undefined,
-  alignV?: "top" | "center" | "bottom" | undefined,
+  alignH?: "left" | "center" | "right" | undefined;
+  alignV?: "top" | "center" | "bottom" | undefined;
   middleware: AuthMiddleware;
   children: ReactNode;
 }
@@ -38,35 +32,20 @@ const globalStyles = globalCss({
   },
 });
 
-const Layout: FC<ILayout> = ({ children, middleware, title, alignH = "center", alignV = "center" }) => {
+const Layout: FC<ILayout> = ({
+  children,
+  middleware,
+  title,
+  alignH = "center",
+  alignV = "center",
+}) => {
   globalStyles();
-  const [username, setUsername] = useState({
-    full: "",
-    initials: "",
-  });
-  const { user, logout } = useAuth({
+  const router = useRouter();
+  
+  const { user, username, logout } = useAuth({
     middleware,
     redirectIfAuthenticated: "/",
   });
-
-  useEffect(() => {
-    if (!user) return;
-
-    let full = user.email;
-    let initials = user.email.split("")[0];
-
-    if (user.first_name || user.last_name) {
-      full = `${user.first_name} ${user.last_name}`;
-      initials = `${user.first_name ? user?.first_name.split("")[0] : ""}${
-        user.last_name ? user?.last_name.split("")[0] : ""
-      }`;
-    }
-
-    setUsername({
-      full,
-      initials,
-    });
-  }, [user, setUsername]);
 
   return (
     <div>
@@ -78,7 +57,7 @@ const Layout: FC<ILayout> = ({ children, middleware, title, alignH = "center", a
 
       <main>
         <Header>
-          <div className="header__left">
+          <div className="header__left" onClick={() => router.push("/")}>
             <Logo />
           </div>
           {user ? (
@@ -86,7 +65,7 @@ const Layout: FC<ILayout> = ({ children, middleware, title, alignH = "center", a
               <DropdownMenu>
                 <DropdownMenuTrigger asChild>
                   <div className="header__user">
-                    <Avatar>
+                    <Avatar size="small">
                       {user?.avatar ? (
                         <AvatarImage src={user.avatar} alt={username.full} />
                       ) : (
@@ -101,7 +80,7 @@ const Layout: FC<ILayout> = ({ children, middleware, title, alignH = "center", a
                 </DropdownMenuTrigger>
 
                 <DropdownMenuContent sideOffset={5}>
-                  <DropdownMenuItem>
+                  <DropdownMenuItem onSelect={() => router.push("/profile")}>
                     <PersonIcon />
                     Edit profile
                   </DropdownMenuItem>

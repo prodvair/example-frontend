@@ -11,11 +11,33 @@ export const Avatar = styled(AvatarPrimitive.Root, {
   verticalAlign: "middle",
   overflow: "hidden",
   userSelect: "none",
-  width: 50,
-  height: 50,
   borderRadius: "100%",
   backgroundColor: "$black",
-  border: "1px solid $black",
+  variants: {
+    size: {
+      small: {
+        fontSize: 15,
+        width: 50,
+        height: 50,
+        border: "1px solid $black",
+      },
+      normal: {
+        fontSize: 20,
+        width: 70,
+        height: 70,
+        border: "2px solid $black",
+      },
+      big: {
+        fontSize: 30,
+        width: 100,
+        height: 100,
+        border: "3px solid $black",
+      }
+    },
+  },
+  defaultVariants: {
+    size: "normal"
+  }
 });
 
 export const AvatarImage = styled(AvatarPrimitive.Image, {
@@ -33,7 +55,7 @@ export const AvatarFallback = styled(AvatarPrimitive.Fallback, {
   justifyContent: "center",
   backgroundColor: "$white",
   color: "$black",
-  fontSize: 15,
+  fontSize: "inherit",
   lineHeight: 1,
   fontWeight: 500,
 });
