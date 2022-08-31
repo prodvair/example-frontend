@@ -10,20 +10,37 @@ export const {
   createTheme,
   config,
 } = createStitches({
+  theme: {
+    colors: {
+      bg: "linear-gradient(100.25deg, #9D8CFC 10.86%, #0AC5B3 80.82%)",
+      white: "#DED8E4",
+      black: "#1B141D",
+      gray: "#A09FA5",
+      grayLight: "#C6C5CC",
+      green: "#0AC5B3",
+      red: "#FF6269",
+      purple: "#9D8CFC"
+    },
+    shadows: {
+      inside: "inset 5px 5px 7px rgba(27, 20, 29, 0.13)",
+      outside:
+        "-10px -10px 18px rgba(238, 241, 253, 0.5), 10px 10px 18px rgba(27, 20, 29, 0.15)",
+    },
+  },
   utils: {
-    px: (value) => ({
+    paddingX: (value: string | number) => ({
       paddingLeft: value,
       paddingRight: value,
     }),
-    py: (value) => ({
+    paddingY: (value: string | number) => ({
       paddingTop: value,
       paddingBottom: value,
     }),
-    mx: (value) => ({
+    marginX: (value: string | number) => ({
       marginLeft: value,
       marginRight: value,
     }),
-    my: (value) => ({
+    marginY: (value: string | number) => ({
       marginTop: value,
       marginBottom: value,
     }),

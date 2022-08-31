@@ -12,6 +12,8 @@ import {
 } from "@tanstack/react-query";
 import { appWithTranslation } from "next-i18next";
 
+import "@/style.css";
+
 export type MyAppProps = AppProps & {
   Component: Page;
   pageProps: {

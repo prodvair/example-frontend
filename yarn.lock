@@ -693,6 +693,24 @@
     "@babel/runtime" "^7.13.10"
     "@radix-ui/react-slot" "1.0.0"
 
+"@radix-ui/react-radio-group@^1.0.0":
+  "integrity" "sha512-WekhUjLzH6/ZXQNAum2NNww+0zvOIfFu96+AZ1XXxWolq82vNAgqMbPrxyqij2H/sa33wbjqspErybsTLtVTDA=="
+  "resolved" "https://registry.npmjs.org/@radix-ui/react-radio-group/-/react-radio-group-1.0.0.tgz"
+  "version" "1.0.0"
+  dependencies:
+    "@babel/runtime" "^7.13.10"
+    "@radix-ui/primitive" "1.0.0"
+    "@radix-ui/react-compose-refs" "1.0.0"
+    "@radix-ui/react-context" "1.0.0"
+    "@radix-ui/react-direction" "1.0.0"
+    "@radix-ui/react-label" "1.0.0"
+    "@radix-ui/react-presence" "1.0.0"
+    "@radix-ui/react-primitive" "1.0.0"
+    "@radix-ui/react-roving-focus" "1.0.0"
+    "@radix-ui/react-use-controllable-state" "1.0.0"
+    "@radix-ui/react-use-previous" "1.0.0"
+    "@radix-ui/react-use-size" "1.0.0"
+
 "@radix-ui/react-roving-focus@1.0.0":
   "integrity" "sha512-lHvO4MhvoWpeNbiJAoyDsEtbKqP2jkkdwsMVJ3kfqbkC71J/aXE6Th6gkZA1xHEqSku+t+UgoDjvE7Z3gsBpcg=="
   "resolved" "https://registry.npmjs.org/@radix-ui/react-roving-focus/-/react-roving-focus-1.0.0.tgz"
@@ -798,6 +816,25 @@
     "@radix-ui/react-primitive" "1.0.0"
     "@radix-ui/react-roving-focus" "1.0.0"
     "@radix-ui/react-use-controllable-state" "1.0.0"
+
+"@radix-ui/react-tooltip@^1.0.0":
+  "integrity" "sha512-RB06pov+O4Npy10ei1C6fsyB9QoOjz7Ubo8Sl3qdKtLgkL9iI96925DYtH0bxx6MH6YB2FuzLU6B75qn3AQQQw=="
+  "resolved" "https://registry.npmjs.org/@radix-ui/react-tooltip/-/react-tooltip-1.0.0.tgz"
+  "version" "1.0.0"
+  dependencies:
+    "@babel/runtime" "^7.13.10"
+    "@radix-ui/primitive" "1.0.0"
+    "@radix-ui/react-compose-refs" "1.0.0"
+    "@radix-ui/react-context" "1.0.0"
+    "@radix-ui/react-dismissable-layer" "1.0.0"
+    "@radix-ui/react-id" "1.0.0"
+    "@radix-ui/react-popper" "1.0.0"
+    "@radix-ui/react-portal" "1.0.0"
+    "@radix-ui/react-presence" "1.0.0"
+    "@radix-ui/react-primitive" "1.0.0"
+    "@radix-ui/react-slot" "1.0.0"
+    "@radix-ui/react-use-controllable-state" "1.0.0"
+    "@radix-ui/react-visually-hidden" "1.0.0"
 
 "@radix-ui/react-use-callback-ref@1.0.0":
   "integrity" "sha512-GZtyzoHz95Rhs6S63D2t/eqvdFCm7I+yHMLVQheKM7nBD8mbZIt+ct1jz4536MDnaOGKIxynJ8eHTkVGVVkoTg=="

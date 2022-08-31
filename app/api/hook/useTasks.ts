@@ -1,11 +1,10 @@
-
-import { QueryClient, useQuery } from "@tanstack/react-query";
 import { useCallback } from "react";
-import { getTasks, TaskQuery } from "../fetchers/task";
 
+import { useQuery } from "@tanstack/react-query";
 
+import { TaskQuery, getTasks } from "../fetchers/task";
 
-export function useTasks(query: TaskQuery = {}) {
+export function useTasks(query: TaskQuery = {per_page: 12}) {
   const {
     data: tasks,
     error,

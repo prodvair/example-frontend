@@ -2,27 +2,71 @@ import { FC, ReactNode, useEffect, useState } from "react";
 
 import Head from "next/head";
 
-import { login } from "@/app/api/fetchers/auth";
+import { AuthMiddleware, useAuth } from "@/app/api/hook/useAuth";
+import { globalCss } from "@/stitches.config";
+import { ExitIcon, PersonIcon } from "@radix-ui/react-icons";
+
+import { Header } from "../header";
+import { Logo } from "../logo";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from "../ui/dropdownMenu";
+import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar";
+import { Box } from "../ui/box";
+import {
+  ScrollArea,
+  ScrollAreaCorner,
+  ScrollAreaScrollbar,
+  ScrollAreaThumb,
+  ScrollAreaViewport,
+} from "../ui/scrollArea";
 
 interface ILayout {
   title: string;
+  alignH?: "left" | "center" | "right" | undefined,
+  alignV?: "top" | "center" | "bottom" | undefined,
+  middleware: AuthMiddleware;
   children: ReactNode;
 }
 
-const Layout: FC<ILayout> = ({ children, title }) => {
-  const [isLoading, setIsLoading] = useState(false);
+const globalStyles = globalCss({
+  body: {
+    background: "$bg",
+  },
+});
+
+const Layout: FC<ILayout> = ({ children, middleware, title, alignH = "center", alignV = "center" }) => {
+  globalStyles();
+  const [username, setUsername] = useState({
+    full: "",
+    initials: "",
+  });
+  const { user, logout } = useAuth({
+    middleware,
+    redirectIfAuthenticated: "/",
+  });
 
   useEffect(() => {
-    setIsLoading(true);
+    if (!user) return;
 
-    var timeout = setTimeout(() => {
-      setIsLoading(false);
-    }, 3000);
+    let full = user.email;
+    let initials = user.email.split("")[0];
 
-    return () => {
-      clearTimeout(timeout);
-    };
-  }, []);
+    if (user.first_name || user.last_name) {
+      full = `${user.first_name} ${user.last_name}`;
+      initials = `${user.first_name ? user?.first_name.split("")[0] : ""}${
+        user.last_name ? user?.last_name.split("")[0] : ""
+      }`;
+    }
+
+    setUsername({
+      full,
+      initials,
+    });
+  }, [user, setUsername]);
 
   return (
     <div>
@@ -32,7 +76,50 @@ const Layout: FC<ILayout> = ({ children, title }) => {
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <main>{children}</main>
+      <main>
+        <Header>
+          <div className="header__left">
+            <Logo />
+          </div>
+          {user ? (
+            <div className="header__right">
+              <DropdownMenu>
+                <DropdownMenuTrigger asChild>
+                  <div className="header__user">
+                    <Avatar>
+                      {user?.avatar ? (
+                        <AvatarImage src={user.avatar} alt={username.full} />
+                      ) : (
+                        ""
+                      )}
+
+                      <AvatarFallback>{username.initials}</AvatarFallback>
+                    </Avatar>
+
+                    <span className="header__user-name">{username.full}</span>
+                  </div>
+                </DropdownMenuTrigger>
+
+                <DropdownMenuContent sideOffset={5}>
+                  <DropdownMenuItem>
+                    <PersonIcon />
+                    Edit profile
+                  </DropdownMenuItem>
+                  <DropdownMenuItem onSelect={logout}>
+                    <ExitIcon />
+                    logout
+                  </DropdownMenuItem>
+                </DropdownMenuContent>
+              </DropdownMenu>
+            </div>
+          ) : (
+            ""
+          )}
+        </Header>
+        <Box type="fullScreen" alignH={alignH} alignV={alignV}>
+          {children}
+        </Box>
+      </main>
     </div>
   );
 };

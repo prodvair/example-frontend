@@ -3,6 +3,9 @@ import axios from "axios";
 import { isClient } from "../constants/isClient";
 import { TOKEN_KEY } from "./fetchers/auth";
 
+/**
+ * Create Axios default params
+ */
 const $axios = axios.create({
   withCredentials: true,
   baseURL: process.env.NEXT_PUBLIC_API_DOMEN,
@@ -11,13 +14,18 @@ const $axios = axios.create({
   },
 });
 
-const removeToken = () => {
+/**
+ * Function for remove token on request header
+ */
+export const removeToken = () => {
   delete $axios.defaults.headers.common.Authorization;
 };
 
+/**
+ * Function for add token on request header, if it has.
+ */
 $axios.interceptors.request.use((config) => {
   if (!isClient) return config;
-  console.log(config);
 
   const token = localStorage.getItem(TOKEN_KEY);
 
@@ -30,5 +38,3 @@ $axios.interceptors.request.use((config) => {
 });
 
 export default $axios;
-
-export { removeToken };

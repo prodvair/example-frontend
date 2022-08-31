@@ -2,15 +2,15 @@ import { useCallback, useEffect } from "react";
 
 import { useRouter } from "next/router";
 
-import { useQuery, useQueryClient } from "@tanstack/react-query";
-
 import {
   LoginRequest,
+  register as apiRegister,
   login as apiLogin,
   logout as apiLogout,
   me as apiMe,
-  // logout as apiLogout,
+  RegisterRequest, // logout as apiLogout,
 } from "@/app/api/fetchers/auth";
+import { useQuery, useQueryClient } from "@tanstack/react-query";
 
 export type AuthMiddleware = "auth" | "guest" | null | undefined;
 
@@ -23,7 +23,7 @@ export type UseAuthOptions = {
 export function useAuth({
   middleware,
   redirectIfAuthenticated,
-  redirectIfNotAuthenticated = "/",
+  redirectIfNotAuthenticated = "/login",
 }: UseAuthOptions = {}) {
   const router = useRouter();
   const queryClient = useQueryClient();
@@ -42,24 +42,35 @@ export function useAuth({
     queryClient.invalidateQueries(["user"]);
   }, [queryClient]);
 
-  const login = useCallback((data: LoginRequest) => {
-    return apiLogin(data).then((res) => {
-      revalidate();
-      return res
-    });
-  }, [revalidate]);
+  const login = useCallback(
+    (data: LoginRequest) => {
+      return apiLogin(data).then((res) => {
+        revalidate();
+        return res;
+      });
+    },
+    [revalidate]
+  );
 
-  const logout = useCallback(async () => {
+  const register = useCallback(
+    (data: RegisterRequest) => {
+      return apiRegister(data).then((res) => {
+        revalidate();
+        return res;
+      });
+    },
+    [revalidate]
+  );
+
+  const logout = useCallback(() => {
     if (!error) {
-      await apiLogout();
-
-      revalidate();
+      apiLogout().then(() => revalidate());
     }
 
     if (redirectIfNotAuthenticated) {
       router.push(redirectIfNotAuthenticated);
     }
-  },[error, redirectIfNotAuthenticated, revalidate, router]);
+  }, [error, redirectIfNotAuthenticated, revalidate, router]);
 
   useEffect(() => {
     if (!isFetched) {
@@ -70,7 +81,7 @@ export function useAuth({
       router.push(redirectIfAuthenticated);
     }
 
-    if (middleware === "auth" && error) {
+    if (middleware === "auth" && !user) {
       logout();
     }
   }, [
@@ -86,6 +97,7 @@ export function useAuth({
   return {
     login,
     logout,
+    register,
     revalidate,
     user,
     error,
